@@ -34,7 +34,8 @@ async def health_check(request: Request) -> APIResponse[SystemHealthResponse]:
     - Ayushman Bharat Digital Mission (ABDM) sandbox readiness
     - Standard response wrapping and request correlation ID
     """
-    uptime = time.time() - START_TIME
+    start_time = getattr(request.app.state, "start_time", START_TIME)
+    uptime = time.time() - start_time
     request_id = getattr(request.state, "request_id", None)
 
     health_data = SystemHealthResponse(

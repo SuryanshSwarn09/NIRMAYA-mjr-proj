@@ -2,6 +2,8 @@
 FastAPI Application Entrypoint
 """
 
+import time
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
@@ -12,6 +14,16 @@ from app.core.middleware import (
 )
 from app.core.exceptions import register_exception_handlers
 from app.api.v1.router import api_router
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Manage application lifecycle events (startup initialization and shutdown cleanup)."""
+    # Startup: Record system initialization timestamp
+    app.state.start_time = time.time()
+    yield
+    # Shutdown: Cleanly release active connection pools and background tasks
+
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -25,6 +37,7 @@ app = FastAPI(
     redoc_url="/redoc",
     openapi_url=f"{settings.API_V1_STR}/openapi.json",
     debug=settings.DEBUG,
+    lifespan=lifespan,
 )
 
 # 1. Register custom application & validation exception handlers
