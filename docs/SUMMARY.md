@@ -16,6 +16,7 @@
 * [Month 1: Foundation & Authentication](journey/month-1/week-1.md)
   * [Day 1: Monorepo Scaffold & FastAPI Init](journey/month-1/day-1.md)
   * [Day 2: Tailwind CSS v4 & Clinical Design Tokens](journey/month-1/day-2.md)
+  * [Day 3: FastAPI Core Settings & Telemetry](journey/month-1/day-3.md)
 
 ## Appendix
 * [Comprehensive Changelog](CHANGELOG.md)
