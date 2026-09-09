@@ -1,31 +1,76 @@
-"""Core configuration and settings for NIRMAYA API."""
-from pydantic_settings import BaseSettings
-from typing import List
+"""Core application configuration and environment settings for NIRMAYA."""
+
+from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic import Field, computed_field
+from typing import List, Literal
+from datetime import datetime, timezone
 
 
 class Settings(BaseSettings):
+    """NIRMAYA platform settings with environment validation."""
+
+    # Project Metadata
     PROJECT_NAME: str = "NIRMAYA"
-    PROJECT_FULL_NAME: str = "Networked Interoperable Records Medical Assets & Your Archives"
+    PROJECT_FULL_NAME: str = (
+        "Networked Interoperable Records Medical Assets & Your Archives"
+    )
     VERSION: str = "0.1.0"
     API_V1_STR: str = "/api/v1"
-    
-    # CORS Configuration
+
+    # Environment & Debugging
+    ENVIRONMENT: Literal["development", "staging", "production"] = "development"
+    DEBUG: bool = True
+
+    # Security & Tokens
+    SECRET_KEY: str = Field(
+        default="nirmaya-super-secret-dev-key-change-in-production-2026",
+        description="Core JWT signing secret",
+    )
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 7  # 7 days
+
+    # CORS Allowed Origins
     BACKEND_CORS_ORIGINS: List[str] = [
         "http://localhost:3000",
         "http://127.0.0.1:3000",
+        "http://localhost:8000",
+        "http://127.0.0.1:8000",
     ]
-    
-    # Database Configuration
-    DATABASE_URL: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/nirmaya"
-    
-    # Supabase JWT Configuration
-    SUPABASE_URL: str = ""
-    SUPABASE_KEY: str = ""
-    SUPABASE_JWT_SECRET: str = "your-supabase-jwt-secret-here"
-    
-    class Config:
-        case_sensitive = True
-        env_file = ".env"
+
+    # Database Configuration (PostgreSQL 16)
+    DATABASE_URL: str = Field(
+        default="postgresql+asyncpg://postgres:postgres@localhost:5432/nirmaya",
+        description="Async PostgreSQL connection string",
+    )
+    DATABASE_POOL_SIZE: int = 10
+    DATABASE_MAX_OVERFLOW: int = 20
+    DATABASE_ECHO: bool = False
+
+    # Supabase Auth & Storage
+    SUPABASE_URL: str = Field(default="", description="Supabase project endpoint URL")
+    SUPABASE_KEY: str = Field(default="", description="Supabase publishable anon key")
+    SUPABASE_SERVICE_ROLE_KEY: str = Field(
+        default="", description="Supabase service role administrative key"
+    )
+    SUPABASE_JWT_SECRET: str = Field(
+        default="supabase-jwt-secret-placeholder",
+        description="JWT secret for validating Supabase access tokens",
+    )
+
+    # Healthcare Interoperability Flags
+    FHIR_VERSION: str = "R4"
+    ABDM_SANDBOX_ENABLED: bool = True
+
+    model_config = SettingsConfigDict(
+        case_sensitive=True,
+        env_file=".env",
+        env_file_encoding="utf-8",
+        extra="ignore",
+    )
+
+    @computed_field
+    @property
+    def is_production(self) -> bool:
+        return self.ENVIRONMENT == "production"
 
 
 settings = Settings()
