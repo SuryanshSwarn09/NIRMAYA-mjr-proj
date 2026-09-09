@@ -1,6 +1,7 @@
-"""Custom ASGI middleware for performance telemetry and security headers."""
+"""Custom ASGI middleware for performance telemetry, correlation IDs, and security headers."""
 
 import time
+import uuid
 from fastapi import Request, Response
 from starlette.middleware.base import BaseHTTPMiddleware
 from app.core.cors import get_security_headers
@@ -21,4 +22,21 @@ class PerformanceTelemetryMiddleware(BaseHTTPMiddleware):
         for header, value in get_security_headers().items():
             response.headers[header] = value
 
+        return response
+
+
+class CorrelationIdMiddleware(BaseHTTPMiddleware):
+    """Assigns or propagates unique X-Request-ID headers for clinical audit tracing."""
+
+    async def dispatch(self, request: Request, call_next) -> Response:
+        # Extract inbound correlation ID or generate new UUID4
+        request_id = request.headers.get("X-Request-ID")
+        if not request_id:
+            request_id = str(uuid.uuid4())
+
+        request.state.request_id = request_id
+        response: Response = await call_next(request)
+
+        # Echo request ID on the outbound response
+        response.headers["X-Request-ID"] = request_id
         return response
