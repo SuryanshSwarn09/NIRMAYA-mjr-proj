@@ -1,4 +1,12 @@
-# GitBook Documentation Configuration for /docs directory
-structure:
-  readme: README.md
-  summary: SUMMARY.md
+$schema: https://api.gitbook.com/gitbook-docs.yaml
+
+site:
+  title: NIRMAYA Documentation
+  structure:
+    - type: space
+      key: nirmaya-docs
+      title: NIRMAYA Documentation
+      path: docs
+      default: true
+      content:
+        directory: .
