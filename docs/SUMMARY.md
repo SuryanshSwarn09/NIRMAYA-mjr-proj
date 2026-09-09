@@ -17,6 +17,7 @@
   * [Day 1: Monorepo Scaffold & FastAPI Init](journey/month-1/day-1.md)
   * [Day 2: Tailwind CSS v4 & Clinical Design Tokens](journey/month-1/day-2.md)
   * [Day 3: FastAPI Core Settings & Telemetry](journey/month-1/day-3.md)
+  * [Day 4: Unified Layout & Navigation Shell](journey/month-1/day-4.md)
   * [Architecture Audit & Hardening](journey/month-1/architecture-audit.md)
 
 ## Appendix

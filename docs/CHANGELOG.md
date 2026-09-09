@@ -69,8 +69,27 @@
   - Frontend production build (`next build --turbopack`) passing with 0 TypeScript/CSS errors.
   - Complete audit journal documented in `docs/journey/month-1/architecture-audit.md`.
 
+#### Day 4 (Thu) - Milestone 01-04
+- **Focus:** Unified Clinical Layout Shell, Navigation Architecture & Real-Time Node Heartbeat
+- **Executed Micro-Commits (10+ Daily Rule):**
+  1. `7021bb4: feat(frontend): create navigation configuration model and route registry`
+  2. `4566ec2: feat(frontend): create brand logo and clinical node identity component`
+  3. `65da730: feat(frontend): implement desktop navigation bar with active route highlighting`
+  4. `42f2425: feat(frontend): implement responsive mobile navigation drawer with animated overlay`
+  5. `115f8e8: feat(frontend): create persistent system status bar with live backend health indicator`
+  6. `886a2df: feat(frontend): build enterprise healthcare footer with regulatory and standards links`
+  7. `5156a8e: feat(frontend): create main application layout shell integrating navigation, status bar, and footer`
+  8. `b71693c: feat(frontend): wire root layout with app shell and persistent components`
+  9. `167d9bd: refactor(frontend): streamline homepage to utilize app shell and new layout primitives`
+  10. `b26090e: docs(journey): document day 4 navigation architecture in gitbook and changelog`
+- **Verification:**
+  - Production build `next build --turbopack` completed in 35.2s with **0 errors** across all static routes.
+  - Automated backend tests verified (`10/10 tests passing`).
+  - Real-time heartbeat component tested against `/api/v1/health` with simulated fallback.
+
 ---
 *(Entries will be appended daily in sequential order across the 80-day roadmap)*
+
 
 
 
