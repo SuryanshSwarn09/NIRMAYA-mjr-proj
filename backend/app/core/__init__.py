@@ -1,3 +1,6 @@
-from .config import settings
+"""Core package exports."""
 
-__all__ = ["settings"]
+from .config import settings
+from .logging import logger, setup_clinical_logging
+
+__all__ = ["settings", "logger", "setup_clinical_logging"]

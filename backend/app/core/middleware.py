@@ -5,10 +5,11 @@ import uuid
 from fastapi import Request, Response
 from starlette.middleware.base import BaseHTTPMiddleware
 from app.core.cors import get_security_headers
+from app.core.logging import logger
 
 
 class PerformanceTelemetryMiddleware(BaseHTTPMiddleware):
-    """Calculates sub-millisecond execution time and appends diagnostic telemetry."""
+    """Calculates sub-millisecond execution time, appends headers, and emits audit logs."""
 
     async def dispatch(self, request: Request, call_next) -> Response:
         start_time = time.perf_counter()
@@ -21,6 +22,14 @@ class PerformanceTelemetryMiddleware(BaseHTTPMiddleware):
         # Inject standard security headers
         for header, value in get_security_headers().items():
             response.headers[header] = value
+
+        # Emit structured audit access log
+        request_id = getattr(request.state, "request_id", "-")
+        client_ip = request.client.host if request.client else "unknown"
+        logger.info(
+            f"{client_ip} | {request.method} {request.url.path} -> HTTP {response.status_code} [{process_time_ms:.2f}ms]",
+            extra={"request_id": request_id},
+        )
 
         return response
 
