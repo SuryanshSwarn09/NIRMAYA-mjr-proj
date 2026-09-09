@@ -1,6 +1,16 @@
+"""NIRMAYA: Networked Interoperable Records Medical Assets & Your Archives
+FastAPI Application Entrypoint
+"""
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
+from app.core.cors import get_allowed_origins
+from app.core.middleware import (
+    PerformanceTelemetryMiddleware,
+    CorrelationIdMiddleware,
+)
+from app.core.exceptions import register_exception_handlers
 from app.api.v1.router import api_router
 
 app = FastAPI(
@@ -14,26 +24,39 @@ app = FastAPI(
     docs_url="/docs",
     redoc_url="/redoc",
     openapi_url=f"{settings.API_V1_STR}/openapi.json",
+    debug=settings.DEBUG,
 )
 
-# Set up CORS middleware
+# 1. Register custom application & validation exception handlers
+register_exception_handlers(app)
+
+# 2. Add performance telemetry middleware (X-Process-Time, security headers)
+app.add_middleware(PerformanceTelemetryMiddleware)
+
+# 3. Add correlation ID middleware (X-Request-ID propagation)
+app.add_middleware(CorrelationIdMiddleware)
+
+# 4. Set up dynamic CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.BACKEND_CORS_ORIGINS,
+    allow_origins=get_allowed_origins(),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Include v1 API router
+# 5. Include API v1 routes
 app.include_router(api_router, prefix=settings.API_V1_STR)
 
 
 @app.get("/", tags=["Root"])
 async def root():
+    """Root metadata discovery endpoint."""
     return {
         "message": f"Welcome to {settings.PROJECT_NAME} ({settings.PROJECT_FULL_NAME}) API",
         "version": settings.VERSION,
+        "environment": settings.ENVIRONMENT,
         "docs": "/docs",
         "api_v1": settings.API_V1_STR,
+        "standards": ["HL7 FHIR R4", "ABDM Simulated"],
     }
