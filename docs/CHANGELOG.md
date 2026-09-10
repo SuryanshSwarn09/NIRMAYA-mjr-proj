@@ -87,9 +87,24 @@
   - Automated backend tests verified (`10/10 tests passing`).
   - Real-time heartbeat component tested against `/api/v1/health` with simulated fallback.
 
+#### Day 5 (Fri) - Milestone 01-05 (Closing Week 1)
+- **Focus:** System Architecture Specification, Pre-flight Doctor Diagnostics, Cross-Platform Orchestration, Capabilities Discovery & Week 1 Close
+- **Executed Micro-Commits (10+ Daily Rule):**
+  1. `a095438: docs(architecture): author comprehensive system architecture and data flow specification`
+  2. `834a6c6: feat(scripts): create python environment and dependency diagnostic validator`
+  3. `56966f0: feat(scripts): implement powershell local monorepo development launcher`
+  4. `f0485c7: feat(scripts): implement posix bash local development launcher`
+  5. `6c5c856: feat(scripts): create cross-platform npm root run scripts`
+  6. `b4e4721: feat(api): add system capabilities and version discovery endpoint`
+  7. `9a26d0b: test(backend): add test coverage for meta capabilities discovery endpoint`
+  8. `019f482: docs(readme): enhance root readme with system architecture diagrams and badges`
+  9. `docs(journey): author day 5 engineering log and update changelog for week 1 close`
+  10. `docs(journey): author week 1 retrospective and week 2 preview in gitbook`
+- **Verification:**
+  - `doctor.py` diagnostic check verified all 7 environment requirements with 0 warnings.
+  - Backend test suite expanded to **11 automated tests (`pytest -v`)**, all passing (100%).
+  - Cross-platform launchers validated on Windows PowerShell and POSIX Bash.
+  - GitBook space updated with full architecture specifications and Week 1 retrospective.
+
 ---
 *(Entries will be appended daily in sequential order across the 80-day roadmap)*
-
-
-
-
