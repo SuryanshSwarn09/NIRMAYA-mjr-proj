@@ -9,7 +9,7 @@
 
 ## 1. Executive Summary
 
-Week 1 marks the successful launch and architectural establishment of **NIRMAYA (Networked Interoperable Records Medical Archives & Your Archives)**. Developed as a major project in Health Informatics, NIRMAYA avoids the conventional pitfall of fragmented prototyping by establishing an enterprise monorepo foundation from day one.
+Week 1 marks the successful launch and architectural establishment of **NIRMAYA (Networked Interoperable Records Medical Assets & Your Archives)**. Developed as a major project in Health Informatics, NIRMAYA avoids the conventional pitfall of fragmented prototyping by establishing an enterprise monorepo foundation from day one.
 
 Over the course of 5 active development days and a rigorous architectural audit, the repository accumulated **45+ atomic micro-commits**, strictly following Conventional Commits and maintaining complete GitBook documentation parity.
 
