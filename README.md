@@ -1,78 +1,127 @@
 # NIRMAYA: Networked Interoperable Records Medical Assets & Your Archives
 
-> **A Unified Health Interoperability Network & Longitudinal Patient Vault**  
-> Built on **HL7 FHIR Release 4** & simulated **ABDM (Ayushman Bharat Digital Mission)** standards.
+<div align="center">
+
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688.svg?style=flat&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
+[![Next.js 15](https://img.shields.io/badge/Next.js-15.5+-000000.svg?style=flat&logo=next.js&logoColor=white)](https://nextjs.org)
+[![Tailwind CSS v4](https://img.shields.io/badge/Tailwind-CSS_v4-38B2AC.svg?style=flat&logo=tailwind-css&logoColor=white)](https://tailwindcss.com)
+[![HL7 FHIR](https://img.shields.io/badge/HL7_FHIR-Release_4-E53E3E.svg?style=flat&logo=fhir&logoColor=white)](https://hl7.org/fhir/R4/)
+[![ABDM](https://img.shields.io/badge/ABDM-Sandbox_Ready-FF9933.svg?style=flat)](https://abdm.gov.in/)
+[![Tests](https://img.shields.io/badge/Pytest-11_Passed_(100%25)-brightgreen.svg?style=flat&logo=pytest&logoColor=white)](backend/tests/)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat)](LICENSE)
+
+**A Unified Health Interoperability Network & Longitudinal Patient Vault**  
+*Built on HL7 FHIR Release 4 and Simulated Ayushman Bharat Digital Mission (ABDM) Standards*
+
+[System Architecture](docs/ARCHITECTURE.md) • [GitBook Documentation](docs/README.md) • [Changelog](docs/CHANGELOG.md) • [API Swagger Docs](http://localhost:8000/docs)
+
+</div>
 
 ---
 
-## Overview
+## 1. Executive Summary
 
-**NIRMAYA** is an enterprise-grade digital health interoperability platform designed as a standout final-year major project. Instead of isolated database silos, NIRMAYA structures patient health records around modern healthcare data standards:
-
-- **Patient Health Vault:** Central locker where patients own and manage their longitudinal medical history, diagnostic reports, and appointments.
-- **Provider (Doctor) EMR:** Clinical workspace for verified patient timeline reviews, encounter documentation, and structured e-prescriptions (`FHIR MedicationRequest`).
-- **Diagnostic (Lab) Gateway:** Secured gateway for partner laboratories to upload test results (both binary PDFs and structured `FHIR Observation` data).
-- **Interoperability Hub:** Native export of standard HL7 FHIR R4 JSON Bundles and simulation of the Ayushman Bharat Health Account (ABHA) ecosystem.
+**NIRMAYA** is an enterprise-grade digital health interoperability platform designed as a standout final-year major project in Health Informatics. Rather than storing records in isolated, proprietary tables, NIRMAYA structures all patient encounters, diagnostic observations, and pharmaceutical regimens around **HL7 FHIR Release 4** and simulates India's **Ayushman Bharat Digital Mission (ABDM)** ecosystem.
 
 ---
 
-## Tech Stack
+## 2. The 3-Pillar Unified Network
 
-| Layer | Technologies |
-|---|---|
-| **Frontend** | Next.js 15 (App Router), React 19, TypeScript, Tailwind CSS v4, Framer Motion |
-| **Backend** | FastAPI (Python 3.11), Pydantic v2, SQLAlchemy 2.0 |
-| **Database** | PostgreSQL via SQLAlchemy ORM & Alembic migrations |
-| **Auth & Storage**| Supabase Auth (RBAC & JWT verification) & Supabase Storage (Encrypted PDFs) |
-| **Standards** | HL7 FHIR R4 (`Patient`, `Practitioner`, `Observation`, `MedicationRequest`, `Bundle`), Simulated ABDM/ABHA |
+```mermaid
+graph TD
+    subgraph NIRMAYA_NETWORK [NIRMAYA Interoperability Network]
+        direction TB
+        VAULT[Patient Health Vault<br/>Longitudinal History & ABHA]
+        EMR[Provider Doctor EMR<br/>Clinical Notes & e-Prescriptions]
+        LAB[Diagnostic Gateway<br/>Test Findings & Stamped PDFs]
+    end
 
----
+    subgraph STANDARDS_CORE [FastAPI Interoperability Hub]
+        FHIR[HL7 FHIR R4 Engine<br/>Encounter, Observation, MedicationRequest]
+        ABDM[Simulated ABDM Consent Manager<br/>M1 / M2 / M3 Data Exchange]
+    end
 
-## Project Structure
+    subgraph DATA_PERSISTENCE [Storage Infrastructure]
+        PG[(PostgreSQL 16 Engine<br/>ACID Relational Integrity)]
+        SUPA[Supabase Storage & Auth<br/>RBAC & Presigned Medical PDFs]
+    end
 
+    VAULT <--> STANDARDS_CORE
+    EMR <--> STANDARDS_CORE
+    LAB <--> STANDARDS_CORE
+    STANDARDS_CORE <--> PG
+    STANDARDS_CORE <--> SUPA
 ```
-nirmaya/
-├── frontend/             # Next.js 15 App Router frontend
-├── backend/              # FastAPI Python backend
-│   └── app/
-│       ├── api/v1/       # Versioned REST endpoints
-│       ├── core/         # Settings, security & config
-│       ├── models/       # SQLAlchemy database models
-│       ├── schemas/      # Pydantic schemas
-│       ├── fhir/         # HL7 FHIR R4 models & serializers
-│       └── abdm/         # Simulated ABHA & consent logic
-├── docs/                 # Documentation, architecture & CHANGELOG
-└── README.md             # Project documentation
-```
+
+- **Patient Health Vault:** A self-sovereign health locker where patients own their complete longitudinal medical history, manage time-bound doctor consent grants, and link simulated 14-digit ABHA IDs.
+- **Provider (Doctor) EMR:** A high-efficiency consultation console for verified patient timeline review, vitals recording, and structured e-prescription authoring (`MedicationRequest`).
+- **Diagnostic (Lab) Gateway:** A secured channel for accredited laboratories to upload both human-readable PDF reports and machine-readable quantitative observations (`Observation`) directly into patient records.
 
 ---
 
-## Getting Started
+## 3. Technology Stack
 
-### Backend Setup
+| Layer | Technologies | Role & Architectural Rationale |
+|---|---|---|
+| **Frontend** | Next.js 15 (App Router), React 19, TypeScript, Tailwind CSS v4, Framer Motion | Server-rendered clinical views, responsive layouts, micro-animations |
+| **Backend** | FastAPI (Python 3.11/3.12), Pydantic v2, Uvicorn ASGI | High-throughput async routing, strict FHIR validation, sub-ms telemetry |
+| **Database** | PostgreSQL 16 via SQLAlchemy 2.0 (ORM) & Alembic | ACID relational integrity, row-level locking for appointment slots |
+| **Auth & Storage** | Supabase Auth (RBAC) & Supabase Storage | Role-based JWT validation, presigned short-lived medical PDF URLs |
+| **Standards** | HL7 FHIR Release 4, Simulated ABDM M1/M2/M3 | Interoperable JSON Bundles, LOINC, SNOMED-CT code systems |
+
+---
+
+## 4. Quickstart Guide
+
+### Prerequisites
+- Python >= 3.11
+- Node.js >= 18
+- Git
+
+### 1. Run Pre-flight System Diagnostics
 ```bash
-cd backend
-python -m venv venv
-# On Windows:
-.\venv\Scripts\activate
-# On Unix:
-source venv/bin/activate
-
-pip install -r requirements.txt
-uvicorn app.main:app --reload --port 8000
+python scripts/doctor.py
 ```
-Interactive API documentation will be available at [http://localhost:8000/docs](http://localhost:8000/docs).
 
-### Frontend Setup
-```bash
-cd frontend
-npm install
+### 2. Single-Command Concurrent Launch
+**Windows (PowerShell):**
+```powershell
 npm run dev
+# Or directly:
+.\scripts\run-dev.ps1
 ```
-The web application will be available at [http://localhost:3000](http://localhost:3000).
+
+**POSIX / Linux / macOS (Bash):**
+```bash
+npm run dev:bash
+# Or directly:
+./scripts/run-dev.sh
+```
+
+### 3. Service Endpoints
+- **Frontend Web Portal:** [http://localhost:3000](http://localhost:3000)
+- **FastAPI Core Backend:** [http://localhost:8000](http://localhost:8000)
+- **Interactive Swagger Docs:** [http://localhost:8000/docs](http://localhost:8000/docs)
+- **FHIR Capabilities Statement:** [http://localhost:8000/api/v1/meta](http://localhost:8000/api/v1/meta)
+- **System Health & Telemetry:** [http://localhost:8000/api/v1/health](http://localhost:8000/api/v1/health)
 
 ---
 
-## Roadmap & Development Log
+## 5. Development Roadmap & Discipline
 
-Development is paced systematically across 4 months (16 weeks, 80 daily micro-commits). See [`docs/CHANGELOG.md`](docs/CHANGELOG.md) for detailed daily progress and atomic commit history.
+NIRMAYA is developed across a structured **4-Month (16-Week / 80-Day)** schedule. Every working day follows the **10+ Atomic Micro-Commit Rule** adhering strictly to Conventional Commits:
+
+- **Month 1:** Foundation, Database Models, RBAC Auth & Onboarding Profiles (`v0.1.0`)
+- **Month 2:** Doctor Discovery, Availability Engine & Concurrency Booking (`v0.2.0`)
+- **Month 3:** Clinical EMR, Prescription Generator, Lab Gateway & HL7 FHIR Bundles (`v0.3.0`)
+- **Month 4:** Real-Time Sync, Production Hardening, Cloud Deployment & Academic Report (`v1.0.0`)
+
+See [`docs/CHANGELOG.md`](docs/CHANGELOG.md) for the live micro-commit journal.
+
+---
+
+## 6. License & Authorship
+
+- **Author:** Suryansh Swarnkar
+- **Project:** NIRMAYA Health Informatics Major Project
+- **License:** MIT
