@@ -5,6 +5,7 @@
 ## Part I: System Vision & Architecture
 * [The Healthcare Data Dilemma](vision/problem-statement.md)
 * [The 3-Pillar Unified Network](vision/architecture.md)
+* [System Architecture & Data Flow](ARCHITECTURE.md)
 * [Technology Stack & Rationale](vision/tech-stack.md)
 
 ## Part II: Healthcare Interoperability Standards
@@ -17,8 +18,10 @@
   * [Day 1: Monorepo Scaffold & FastAPI Init](journey/month-1/day-1.md)
   * [Day 2: Tailwind CSS v4 & Clinical Design Tokens](journey/month-1/day-2.md)
   * [Day 3: FastAPI Core Settings & Telemetry](journey/month-1/day-3.md)
-  * [Day 4: Unified Layout & Navigation Shell](journey/month-1/day-4.md)
   * [Architecture Audit & Hardening](journey/month-1/architecture-audit.md)
+  * [Day 4: Unified Layout & Navigation Shell](journey/month-1/day-4.md)
+  * [Day 5: Diagnostics, Capabilities & Orchestration](journey/month-1/day-5.md)
+  * [Week 1 Retrospective & Metrics](journey/month-1/week-1-review.md)
 
 ## Appendix
 * [Comprehensive Changelog](CHANGELOG.md)
