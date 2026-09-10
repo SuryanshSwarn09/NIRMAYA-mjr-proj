@@ -122,6 +122,6 @@ See [`docs/CHANGELOG.md`](docs/CHANGELOG.md) for the live micro-commit journal.
 
 ## 6. License & Authorship
 
-- **Author:** Suryansh Swarnkar
+- **Author:** Suryansh Swarn
 - **Project:** NIRMAYA Health Informatics Major Project
 - **License:** MIT

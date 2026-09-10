@@ -3,7 +3,7 @@
 **Date:** September 10, 2026  
 **Period:** Month 1, Week 1 (Days 1–5 + Architectural Audit)  
 **Milestone Version:** `v0.1.0-alpha.w1`  
-**Author:** Suryansh Swarnkar  
+**Author:** Suryansh Swarn  
 
 ---
 
