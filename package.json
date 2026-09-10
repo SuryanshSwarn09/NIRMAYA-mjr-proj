@@ -1,0 +1,28 @@
+{
+  "name": "nirmaya",
+  "version": "0.1.0",
+  "description": "Networked Interoperable Records Medical Assets & Your Archives",
+  "private": true,
+  "scripts": {
+    "dev": "powershell -ExecutionPolicy Bypass -File ./scripts/run-dev.ps1",
+    "dev:bash": "bash ./scripts/run-dev.sh",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "dev:backend": "cd backend && python -m uvicorn app.main:app --reload --port 8000",
+    "build:frontend": "npm --prefix frontend run build",
+    "test:backend": "cd backend && python -m pytest -v",
+    "doctor": "python scripts/doctor.py"
+  },
+  "keywords": [
+    "healthcare",
+    "interoperability",
+    "hl7-fhir",
+    "abdm",
+    "abha",
+    "emr",
+    "health-vault",
+    "fastapi",
+    "nextjs"
+  ],
+  "author": "Suryansh Swarnkar",
+  "license": "MIT"
+}
